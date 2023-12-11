@@ -1,5 +1,13 @@
+// CARGAR TODAS LA VARIABLES DE ENTORNO
+require('dotenv').config()
+
+// Importar la variable app
+const connection = require('./database.js')
 const app = require('./server.js')
 
-app.listen(3000,()=>{
-    console.log(`Server on port ${3000}`);
+
+connection()
+
+app.listen(app.get('port'),()=>{
+    console.log(`Server on port ${app.get('port')}`);
 })

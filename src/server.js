@@ -6,6 +6,8 @@ const path = require('path');
 
 const { engine }  = require('express-handlebars')
 
+const methodOverride = require('method-override');
+
 
 // Inicializaciones
 //Instanciar express
@@ -24,13 +26,16 @@ app.use(express.urlencoded({extended:false}))
 
 // Variables globales
 
-// Rutas 
+// RUTAS//////////////////
+
 // Primera ruta
 // app.get('/',(req,res)=>{
 //     res.send("Server on")
 // })
 
+app.use(require('./routers/portafolio.routes'))
 app.use(require('./routers/index.routes'))
+app.use(methodOverride('_method'))
 // Archivos estáticos
 //Definir archivos estaticos y publicos
 app.use(express.static(path.join(__dirname,'public')))

@@ -31,7 +31,7 @@ app.use(methodOverride('_method'))
 // MIDDLEWARES
 // El servidor va a trabajar con informacion en base a formularios
 app.use(express.urlencoded({extended:false}))
-
+/**************************************************************/
 // configurar la session del usuario
 app.use(session({ 
     secret: 'secret',
@@ -41,7 +41,7 @@ app.use(session({
 // inicializar passportjs
 app.use(passport.initialize())
 app.use(passport.session())
-
+//******************************************************** */
 
 // Variables globales
 
@@ -51,7 +51,10 @@ app.use(passport.session())
 // app.get('/',(req,res)=>{
 //     res.send("Server on")
 // })
-
+app.use((req,res,next)=>{
+    res.locals.user = req.user?.name || null
+    next()
+})
 
 app.use(require('./routers/portafolio.routes'))
 app.use(require('./routers/index.routes'))

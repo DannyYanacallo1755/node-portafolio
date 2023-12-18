@@ -2,7 +2,7 @@
 // IMPORTAR ROUTER DE EXPRESS
 const {Router} = require('express')
 const { renderRegisterForm, registerNewUser, renderLoginForm, loginUser, logoutUser } = require('../controllers/user.controllers')
-
+const { redirectIfAuthenticated } = require('../helpers/validate-auth')
 
 // INSTANCIAR LA VVARIABLE router
 const router = Router()
@@ -14,7 +14,7 @@ router.get('/user/register',renderRegisterForm)
 router.post('/user/register',registerNewUser)
 
 // ruta para mostrar el formulario de login
-router.get('/user/login',renderLoginForm)
+router.get('/user/login', redirectIfAuthenticated, renderLoginForm)
 // ruta para capturar los datos del formulario y realizar el proceso de loginen conjunto con BDD
 router.post('/user/login',loginUser)
 

@@ -9,6 +9,7 @@ const { engine }  = require('express-handlebars')
 const methodOverride = require('method-override');
 
 
+
 // Inicializaciones
 //Instanciar express
 const app = express()
@@ -17,7 +18,7 @@ const app = express()
 // Variables de configuracion
 app.set('port',process.env.port || 3000)
 app.set('views',path.join(__dirname, 'views'))
-
+app.use(methodOverride('_method'))
 
 // Middlewares 
 // El servidor va a trabajar con informacion en base a formularios

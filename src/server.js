@@ -7,12 +7,17 @@ const path = require('path');
 const { engine }  = require('express-handlebars')
 
 const methodOverride = require('method-override');
+// IMPORTACION DE passport 
+const passport = require('passport');
+
+// IMPORTACION DE express-session
+const session = require('express-session');
 
 
-
-// Inicializaciones
+// INICIALIZACIONES
 //Instanciar express
 const app = express()
+require('./config/passport')
 
 // Configuraciones 
 // Variables de configuracion
@@ -20,9 +25,22 @@ app.set('port',process.env.port || 3000)
 app.set('views',path.join(__dirname, 'views'))
 app.use(methodOverride('_method'))
 
-// Middlewares 
+
+
+
+// MIDDLEWARES
 // El servidor va a trabajar con informacion en base a formularios
 app.use(express.urlencoded({extended:false}))
+
+// configurar la session del usuario
+app.use(session({ 
+    secret: 'secret',
+    resave:true,
+    saveUninitialized:true
+}));
+// inicializar passportjs
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 // Variables globales
@@ -34,10 +52,19 @@ app.use(express.urlencoded({extended:false}))
 //     res.send("Server on")
 // })
 
+
 app.use(require('./routers/portafolio.routes'))
 app.use(require('./routers/index.routes'))
 app.use(methodOverride('_method'))
+app.use(require('./routers/user.routes'))
+
+
+
+
+
+
 // Archivos estáticos
+
 //Definir archivos estaticos y publicos
 app.use(express.static(path.join(__dirname,'public')))
 

@@ -13,6 +13,8 @@ const passport = require('passport');
 // IMPORTACION DE express-session
 const session = require('express-session');
 
+const fileUpload = require('express-fileupload')
+
 
 // INICIALIZACIONES
 //Instanciar express
@@ -55,6 +57,10 @@ app.use((req,res,next)=>{
     res.locals.user = req.user?.name || null
     next()
 })
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads'
+}));
 
 app.use(require('./routers/portafolio.routes'))
 app.use(require('./routers/index.routes'))

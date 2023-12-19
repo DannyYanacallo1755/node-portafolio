@@ -35,15 +35,14 @@ const createNewPortafolio =async (req,res)=>{
     const newPortfolio = new Portfolio({title,category,description})
     newPortfolio.user = req.user._id
     if(!(req.files?.image)) return res.send("Se requiere una imagen")
-    try{
-        await uploadImage(req.files.image.tempFilePath)
-    }catch{
-        console.log(error);
+    const imageUpload = await uploadImage(req.files.image.tempFilePath)
+    newPortfolio.image = {
+        public_id:imageUpload.public_id,
+        secure_url:imageUpload.secure_url
     }
     await newPortfolio.save()
     res.redirect('/portafolios')
 }
-
 
 
 

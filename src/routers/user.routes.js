@@ -1,7 +1,7 @@
 
 // IMPORTAR ROUTER DE EXPRESS
 const {Router} = require('express')
-const { renderRegisterForm, registerNewUser, renderLoginForm, loginUser, logoutUser } = require('../controllers/user.controllers')
+const { renderRegisterForm, registerNewUser, renderLoginForm, loginUser, logoutUser, confirmEmail } = require('../controllers/user.controllers')
 const { redirectIfAuthenticated } = require('../helpers/validate-auth')
 
 // INSTANCIAR LA VVARIABLE router
@@ -20,6 +20,8 @@ router.post('/user/login',loginUser)
 
 //Ruta para cerrar sesion del usuario
 router.post('/user/logout',logoutUser)
+
+router.get('/user/confirmar/:token',confirmEmail)
 
 
 module.exports =router

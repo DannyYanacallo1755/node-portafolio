@@ -1,16 +1,12 @@
-
+const Portfolio = require('../models/Portafolio')
 // PRIMERA FUNCION PARA RENDERIZAR EL INDEX
-const renderIndex = (req,res)=>{
-    res.render('index')
+const renderIndex = async(req,res)=>{
+    const portfolios = await Portfolio.find().lean()
+    res.render('index',{portfolios})
 }
 
-// PRIMERA FUNCION PARA 
-const renderLogin = (req,res)=>{
-    res.render('login')
-}
 
 
 module.exports ={
-    renderIndex, 
-    renderLogin
+    renderIndex
 }
